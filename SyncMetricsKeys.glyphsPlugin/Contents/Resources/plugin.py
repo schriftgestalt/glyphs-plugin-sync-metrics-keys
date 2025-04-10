@@ -52,11 +52,13 @@ class MetricsAutoUpdate(GeneralPlugin):
         self.currentVertWidth = False
 
         self.isMouseDown = False
-        if Glyphs.versionNumber >= 3.3:
+        if Glyphs.buildNumber >= 3320:
             from GlyphsApp.UI import MenuItem
             menuItem = MenuItem(self.name, action=self.toggleMenu_, target=self)
         else:
-            menuItem = NSMenuItem(self.name, self.toggleMenu_)
+            newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, self.toggleMenu_, "")
+            newMenuItem.setTarget_(self)
+
         menuItem.setState_(bool(Glyphs.defaults["com.underscoretype.SyncMetricsKeys.state"]))
         Glyphs.menu[GLYPH_MENU].append(menuItem)
 
